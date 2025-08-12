@@ -1,0 +1,4 @@
+models:
+  LinearRegression:
+    _target_: sklearn.linear_model.LinearRegression
+    n_jobs: -1
