@@ -1,0 +1,11 @@
+dataset:
+  train: "artifact/dataset/train.csv"
+  test: "artifact/dataset/test.csv"
+  raw: "artifact/dataset/data.csv"
+
+preprocessor:
+  path: "artifact/preprocessor/preprocessor.pkl"
+  target_column: "price"
+
+model:
+  path: "artifact/model/model.pkl"
