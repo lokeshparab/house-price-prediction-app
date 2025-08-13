@@ -14,7 +14,7 @@ from src.ml_components import PREPROCESSOR_CONFIG
 from src.utils import  X_y_split, save_object
 
 
-logging = CustomLogger().get_logger(__name__)
+logging = CustomLogger().get_logger(__file__)
 
 @dataclass
 class DataTransformationConfig:
@@ -70,16 +70,18 @@ class DataTransformation:
 
             logging.info("Loaded Train and Test dataset")
 
+            input_feature_train_df, target_feature_train_df = X_y_split(train_df, self.data_transformation_config.target_column)
+            input_feature_test_df, target_feature_test_df = X_y_split(test_df, self.data_transformation_config.target_column)
+
+
             preprocessor = self.get_data_transformer_object(
-                numerical_columns=train_df.select_dtypes(exclude=["object"]).columns,
-                categorical_columns=train_df.select_dtypes(include=["object"]).columns
+                numerical_columns=input_feature_train_df.select_dtypes(exclude=["object"]).columns,
+                categorical_columns=input_feature_train_df.select_dtypes(include=["object"]).columns
             )
 
             logging.info("Created preprocessor object")
 
-            input_feature_train_df, target_feature_train_df = X_y_split(train_df, self.data_transformation_config.target_column)
-            input_feature_test_df, target_feature_test_df = X_y_split(test_df, self.data_transformation_config.target_column)
-
+            
             input_feature_train_arr = preprocessor.fit_transform(input_feature_train_df)
             input_feature_test_arr = preprocessor.transform(input_feature_test_df)
 

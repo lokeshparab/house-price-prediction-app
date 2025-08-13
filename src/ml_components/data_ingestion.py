@@ -9,13 +9,14 @@ import os, sys, pandas as pd
 from src.ml_components import DATA_INGESTION_CONFIG
 from src.utils import create_directory_through_file_path
 
-logging = CustomLogger().get_logger(__name__)
+logging = CustomLogger().get_logger(__file__)
 
 @dataclass
 class DataIngestionConfig:
-    train_data_path: str = DATA_INGESTION_CONFIG["dataset"]["train"]
-    test_data_path: str = DATA_INGESTION_CONFIG["dataset"]["test"]
-    raw_data_path: str = DATA_INGESTION_CONFIG["dataset"]["raw"]
+    train_data_path: str = DATA_INGESTION_CONFIG["train"]
+    test_data_path: str = DATA_INGESTION_CONFIG["test"]
+    raw_data_path: str = DATA_INGESTION_CONFIG["raw"]
+    target_column: str = DATA_INGESTION_CONFIG["target_column"]
 
 class DataIngestion:
     def __init__(self):
@@ -25,7 +26,7 @@ class DataIngestion:
         logging.info("Data ingestion started")
         try:
             df = pd.read_csv(self.ingestion_config.raw_data_path)
-            df.drop(['date','country'], axis=1, inplace=True)
+            df.drop(['date','country','street', 'city', 'statezip', 'country'], axis=1, inplace=True)
             logging.info("Read the dataset as dataframe")
 
             train_set, test_set = train_test_split(df, test_size=0.2, random_state=42)
