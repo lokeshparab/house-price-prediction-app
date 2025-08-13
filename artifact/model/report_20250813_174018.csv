@@ -1,0 +1,9 @@
+model_name,best_model_parmas,model,r2_score,mean_squared_error,mean_absolute_percentage_error
+RandomForestRegressor,"{'n_estimators': 128, 'min_samples_leaf': 2, 'max_depth': 4, 'criterion': 'poisson'}","RandomForestRegressor(criterion='poisson', max_depth=4, min_samples_leaf=2,
+                      n_estimators=128)",0.035859135918077545,983275531562.2225,3.4491743296482054e+19
+LinearRegression,{'fit_intercept': True},LinearRegression(),0.03228385663277078,986921767056.1313,3.718307712482268e+19
+AdaBoostRegressor,"{'n_estimators': 32, 'loss': 'square', 'learning_rate': 0.01}","AdaBoostRegressor(learning_rate=0.01, loss='square', n_estimators=32)",0.029261543107081955,990004062443.9004,3.2120763622148588e+19
+DescisionTreeRegressor,"{'min_samples_leaf': 1, 'max_features': 'log2', 'max_depth': 6, 'criterion': 'friedman_mse'}","DecisionTreeRegressor(criterion='friedman_mse', max_depth=6,
+                      max_features='log2')",0.000969190980138368,1018857914213.0153,3.1120385751101907e+19
+GradientBoostingRegressor,"{'min_samples_leaf': 3, 'max_features': 'log2', 'max_depth': 4, 'loss': 'quantile'}","GradientBoostingRegressor(loss='quantile', max_depth=4, max_features='log2',
+                          min_samples_leaf=3)",-0.012485847430040886,1032579985891.3661,5.05281715287402e+19
