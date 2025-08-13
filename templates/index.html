@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Price Predictor</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-home"></i> House Price Predictor</h1>
+            <p>Get accurate price predictions for residential properties using advanced machine learning</p>
+        </div>
+
+        <div class="main-content">
+            <div class="form-section">
+                <form method="post" action="/predict" id="prediction-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="bedrooms">
+                                <i class="fas fa-bed"></i> Number of Bedrooms
+                                <div class="tooltip">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span class="tooltiptext">Total number of bedrooms in the house</span>
+                                </div>
+                            </label>
+                            <input type="number" id="bedrooms" name="bedrooms" min="1" max="10" 
+                                   value="{{ form_data.bedrooms if form_data else 3 }}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="bathrooms">
+                                <i class="fas fa-bath"></i> Number of Bathrooms
+                            </label>
+                            <input type="number" id="bathrooms" name="bathrooms" min="1" max="8" step="0.5"
+                                   value="{{ form_data.bathrooms if form_data else 2 }}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="living_room_sqft">
+                                <i class="fas fa-couch"></i> Living Room (sq ft)
+                            </label>
+                            <input type="number" id="living_room_sqft" name="living_room_sqft" min="200" max="5000"
+                                   value="{{ form_data.living_room_sqft if form_data else 1500 }}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lot_sqft">
+                                <i class="fas fa-map"></i> Lot Size (sq ft)
+                            </label>
+                            <input type="number" id="lot_sqft" name="lot_sqft" min="1000" max="50000"
+                                   value="{{ form_data.lot_sqft if form_data else 7500 }}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="floors">
+                                <i class="fas fa-building"></i> Number of Floors
+                            </label>
+                            <select id="floors" name="floors" required>
+                                <option value="1" {{ 'selected' if form_data and form_data.floors == 1 else '' }}>1 Floor</option>
+                                <option value="1.5" {{ 'selected' if form_data and form_data.floors == 1.5 else '' }}>1.5 Floors</option>
+                                <option value="2" {{ 'selected' if form_data and form_data.floors == 2 else 'selected' }}>2 Floors</option>
+                                <option value="2.5" {{ 'selected' if form_data and form_data.floors == 2.5 else '' }}>2.5 Floors</option>
+                                <option value="3" {{ 'selected' if form_data and form_data.floors == 3 else '' }}>3+ Floors</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="waterfront">
+                                <i class="fas fa-water"></i> Waterfront Property
+                            </label>
+                            <select id="waterfront" name="waterfront" required>
+                                <option value="0" {{ 'selected' if form_data and form_data.waterfront == 0 else 'selected' }}>No</option>
+                                <option value="1" {{ 'selected' if form_data and form_data.waterfront == 1 else '' }}>Yes</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="view">
+                                <i class="fas fa-eye"></i> View Quality (0-4)
+                            </label>
+                            <select id="view" name="view" required>
+                                <option value="0" {{ 'selected' if form_data and form_data.view == 0 else 'selected' }}>0 - No View</option>
+                                <option value="1" {{ 'selected' if form_data and form_data.view == 1 else '' }}>1 - Fair</option>
+                                <option value="2" {{ 'selected' if form_data and form_data.view == 2 else '' }}>2 - Average</option>
+                                <option value="3" {{ 'selected' if form_data and form_data.view == 3 else '' }}>3 - Good</option>
+                                <option value="4" {{ 'selected' if form_data and form_data.view == 4 else '' }}>4 - Excellent</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="condition">
+                                <i class="fas fa-star"></i> Property Condition (1-5)
+                            </label>
+                            <select id="condition" name="condition" required>
+                                <option value="1" {{ 'selected' if form_data and form_data.condition == 1 else '' }}>1 - Poor</option>
+                                <option value="2" {{ 'selected' if form_data and form_data.condition == 2 else '' }}>2 - Fair</option>
+                                <option value="3" {{ 'selected' if form_data and form_data.condition == 3 else 'selected' }}>3 - Average</option>
+                                <option value="4" {{ 'selected' if form_data and form_data.condition == 4 else '' }}>4 - Good</option>
+                                <option value="5" {{ 'selected' if form_data and form_data.condition == 5 else '' }}>5 - Very Good</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="sqft_above">
+                                <i class="fas fa-arrow-up"></i> Square Feet Above Ground
+                            </label>
+                            <input type="number" id="sqft_above" name="sqft_above" min="500" max="5000"
+                                   value="{{ form_data.sqft_above if form_data else 1500 }}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="sqft_basement">
+                                <i class="fas fa-arrow-down"></i> Square Feet Basement
+                            </label>
+                            <input type="number" id="sqft_basement" name="sqft_basement" min="0" max="2000"
+                                   value="{{ form_data.sqft_basement if form_data else 500 }}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="year_built">
+                                <i class="fas fa-calendar-alt"></i> Year Built
+                            </label>
+                            <input type="number" id="year_built" name="year_built" min="1900" max="2024"
+                                   value="{{ form_data.year_built if form_data else 1995 }}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="year_renovated">
+                                <i class="fas fa-tools"></i> Year Renovated (0 if never)
+                            </label>
+                            <input type="number" id="year_renovated" name="year_renovated" min="0" max="2024"
+                                   value="{{ form_data.year_renovated if form_data else 0 }}">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-calculator"></i> Predict Price
+                    </button>
+                </form>
+            </div>
+
+            <div class="prediction-section">
+                <div class="prediction-icon">
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
+                
+                {% if prediction %}
+                    <h2 class="prediction-title">Predicted Price</h2>
+                    <div class="price-display">
+                        <span class="price-currency">$</span>{{ "{:,.0f}".format(prediction) }}
+                    </div>
+                    
+                    <div class="prediction-details">
+                        <div class="feature-highlights">
+                            <div class="feature-item">
+                                <div class="feature-value">{{ form_data.bedrooms }}</div>
+                                <div class="feature-label">Bedrooms</div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-value">{{ form_data.bathrooms }}</div>
+                                <div class="feature-label">Bathrooms</div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-value">{{ "{:,}".format(form_data.living_room_sqft|int) }}</div>
+                                <div class="feature-label">Living Sq Ft</div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-value">{{ form_data.year_built }}</div>
+                                <div class="feature-label">Built</div>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <h2 class="prediction-title">Ready to Predict</h2>
+                    <p class="prediction-note">Fill in the property details and click "Predict Price" to get an accurate price estimation based on our advanced machine learning model.</p>
+                {% endif %}
+
+                <div class="prediction-note">
+                    <i class="fas fa-info-circle"></i>
+                    Prediction based on advanced machine learning algorithms trained on thousands of property sales.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
