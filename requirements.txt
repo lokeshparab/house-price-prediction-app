@@ -7,3 +7,8 @@ plotly
 pyyaml
 omegaconf
 hydra-core
+tqdm
+catboost
+fastapi
+pydantic
+uvicorn
