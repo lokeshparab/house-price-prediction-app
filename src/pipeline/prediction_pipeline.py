@@ -1,17 +1,31 @@
 from src.ml_components import MODEL_TRAINING_CONFIG, PREPROCESSOR_CONFIG
+from src.pipeline.training_pipeline import TrainingPipeline
 from src.utils import load_object
 
 from exception.custom_exception import CustomException
 from logger.custom_logger import CustomLogger
-import sys, pandas as pd
+import sys, pandas as pd, os
 
 
 logging = CustomLogger().get_logger(__file__)
 
 class PredictionPipeline:
     def __init__(self):
-        self.model = load_object(MODEL_TRAINING_CONFIG["path"])
-        self.preprocessor = load_object(PREPROCESSOR_CONFIG["path"])
+        if not (
+            os.path.exists(MODEL_TRAINING_CONFIG["path"]) 
+            and 
+            os.path.exists(PREPROCESSOR_CONFIG["path"])
+        ):
+            training_pipeline = TrainingPipeline()
+            _, model_path, preprocessor_path = training_pipeline.initiate_training_pipeline()
+
+            self.model = load_object(model_path)
+            self.preprocessor = load_object(preprocessor_path)
+        
+        else:
+            self.model = load_object(MODEL_TRAINING_CONFIG["path"])
+            self.preprocessor = load_object(PREPROCESSOR_CONFIG["path"])
+
 
     def predict(self, features: pd.DataFrame):
         try:

@@ -2,16 +2,10 @@ from fastapi import FastAPI, Request, Form
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
-import uvicorn
-from pydantic import BaseModel
-from typing import Optional
-import joblib  # assuming you're using joblib to save your model
-import numpy as np
-import os
+import uvicorn, numpy as np, os, sys
 
 from models.model import HouseFeatures
 
-from src.pipeline.training_pipeline import TrainingPipeline
 from src.pipeline.prediction_pipeline import PredictionPipeline, HousePricePredictorDataset
 from exception.custom_exception import CustomException
 from logger.custom_logger import CustomLogger
@@ -43,11 +37,11 @@ templates.env.globals["url_for"] = url_for
 
 predictor = PredictionPipeline()
 
-# Load your trained model (replace with your actual model loading)
-# model = joblib.load('your_model.pkl')
+logging = CustomLogger().get_logger(__file__)
 
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
+    logging.info("Loading home page")
     return templates.TemplateResponse("index.html", {"request": request})
 
 @app.post("/predict", response_class=HTMLResponse)
@@ -60,6 +54,7 @@ async def predict(
     floorNum: int = Form(...),
 ):
     try:
+        logging.info("Received request from UI for prediction")
         dataset = HousePricePredictorDataset(
             price_per_sqft=price_per_sqft,
             area=area,
@@ -69,17 +64,22 @@ async def predict(
         )
         
         predicted_price = predictor.predict(dataset.get_dataframework())
+
+        logging.info("UI Prediction completed ")
         
         return templates.TemplateResponse("index.html", {
             "request": request,
             "prediction": predicted_price,
             "form_data": dataset.model_dump()
         })
+    
     except Exception as e:
         # Handle prediction errors gracefully
+        app_exc = CustomException(e, sys)
+        logging.error(str(app_exc))
         return templates.TemplateResponse("index.html", {
             "request": request,
-            "error": f"Prediction failed: {str(e)}",
+            "error": f"Prediction failed: {str(app_exc)}",
             "form_data": {
                 "bedRoom": bedRoom,
                 "bathroom": bathroom,
@@ -93,12 +93,16 @@ async def predict(
 async def api_predict(features: HouseFeatures):
     """API endpoint for programmatic access"""
     try:
+        logging.info("Received request from API for prediction")
         dataset = HousePricePredictorDataset(
             **features.model_dump()
         )
         predicted_price = predictor.predict(dataset.get_dataframework())
+        logging.info("API Prediction completed")
         return {"predicted_price": predicted_price, "status": "success"}
     except Exception as e:
+        app_exc = CustomException(e, sys)
+        logging.error(str(app_exc))
         return {"error": str(e), "status": "failed"}
 
 if __name__ == "__main__":

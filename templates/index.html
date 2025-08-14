@@ -33,7 +33,7 @@
                                 </div>
                             </label>
                             <input type="number" id="bedRoom" name="bedRoom" min="1" max="10" 
-                                   value="{{ form_data.bedRoom if form_data else 3 }}" required>
+                                   value="{{ form_data.bedRoom if form_data else 1 }}" required>
                         </div>
 
                         <div class="form-group">
@@ -41,11 +41,11 @@
                                 <i class="fas fa-bath"></i> Number of Bathrooms
                                 <div class="tooltip">
                                     <i class="fas fa-info-circle"></i>
-                                    <span class="tooltiptext">Include half bathrooms as 0.5</span>
+                                    <span class="tooltiptext">Total number of Bathrooms in the house</span>
                                 </div>
                             </label>
-                            <input type="number" id="bathroom" name="bathroom" min="1" max="8" step="0.5"
-                                   value="{{ form_data.bathroom if form_data else 2 }}" required>
+                            <input type="number" id="bathroom" name="bathroom" min="1" max="20" step="1"
+                                   value="{{ form_data.bathroom if form_data else 1 }}" required>
                         </div>
 
                         <div class="form-group full-width">
@@ -57,7 +57,7 @@
                                 </div>
                             </label>
                             <input type="number" id="area" name="area" min="500" max="10000" step="0.1"
-                                   value="{{ form_data.area if form_data else 1500 }}" required>
+                                   value="{{ form_data.area if form_data else 500 }}" required>
                         </div>
 
                         <div class="form-group full-width">
@@ -68,8 +68,8 @@
                                     <span class="tooltiptext">Market rate per square foot in the area</span>
                                 </div>
                             </label>
-                            <input type="number" id="price_per_sqft" name="price_per_sqft" min="100" max="50000" step="0.01"
-                                   value="{{ form_data.price_per_sqft if form_data else 5000 }}" required>
+                            <input type="number" id="price_per_sqft" name="price_per_sqft" min="50" max="60000" step="0.01"
+                                   value="{{ form_data.price_per_sqft if form_data else 50 }}" required>
                         </div>
 
                         <div class="form-group full-width">
@@ -80,14 +80,8 @@
                                     <span class="tooltiptext">Which floor is the property located on</span>
                                 </div>
                             </label>
-                            <select id="floorNum" name="floorNum" required>
-                                <option value="0" {{ 'selected' if form_data and form_data.floorNum == 0 else '' }}>Ground Floor</option>
-                                <option value="1" {{ 'selected' if form_data and form_data.floorNum == 1 else 'selected' }}>1st Floor</option>
-                                <option value="2" {{ 'selected' if form_data and form_data.floorNum == 2 else '' }}>2nd Floor</option>
-                                <option value="3" {{ 'selected' if form_data and form_data.floorNum == 3 else '' }}>3rd Floor</option>
-                                <option value="4" {{ 'selected' if form_data and form_data.floorNum == 4 else '' }}>4th Floor</option>
-                                <option value="5" {{ 'selected' if form_data and form_data.floorNum == 5 else '' }}>5+ Floor</option>
-                            </select>
+                            <input type="number" id="floorNum" name="floorNum" min="2" max="10" step="1"
+                                   value="{{ form_data.floorNum if form_data else 4 }}" required>
                         </div>
                     </div>
 
@@ -130,7 +124,7 @@
                         
                         <div class="prediction-note">
                             <i class="fas fa-chart-line"></i>
-                            Price per sq ft: ₹{{ "{:,.0f}".format(form_data.price_per_sqft) }}
+                            Price per sq ft: ₹{{ "{:,.2f}".format(form_data.price_per_sqft) }}
                         </div>
                     </div>
                 {% else %}
