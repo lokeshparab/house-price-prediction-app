@@ -29,10 +29,11 @@ class PredictionPipeline:
 
     def predict(self, features: pd.DataFrame):
         try:
-            logging.info("Prediction the results")
+            logging.info("Prediction started")
             transformed_features = self.preprocessor.transform(features)
-            logging.info("Prediction completed")
+            logging.info("Features transformed successfully")
             price = self.model.predict(transformed_features)[0]
+            logging.info("Prediction completed successfully")
             return round(price, 2)
             
         except Exception as e:

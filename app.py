@@ -65,7 +65,7 @@ async def predict(
         
         predicted_price = predictor.predict(dataset.get_dataframework())
 
-        logging.info("UI Prediction completed ")
+        logging.info("Send predicted result to UI")
         
         return templates.TemplateResponse("index.html", {
             "request": request,
