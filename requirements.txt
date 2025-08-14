@@ -12,3 +12,4 @@ catboost
 fastapi
 pydantic
 uvicorn
+python-multipart
