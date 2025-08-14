@@ -1,8 +1,14 @@
 dataset:
   train: "artifact/dataset/train.csv"
   test: "artifact/dataset/test.csv"
-  raw: "artifact/dataset/data.csv"
+  raw: "artifact/dataset/house_cleaned.csv"
   target_column: "price"
+  drop_columns: [
+    'property_name', 'property_type', 'society', 'areaWithType', 'additionalRoom', 'address',
+    'facing', 'agePossession' ,'nearbyLocations', 'description', 'furnishDetails', 'features', 
+    'rating','balcony'
+  ]
+  drop_na_columns: ['price', 'price_per_sqft', 'area', 'floorNum']
 
 preprocessor:
   path: "artifact/preprocessor/preprocessor.pkl"

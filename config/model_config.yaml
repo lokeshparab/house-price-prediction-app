@@ -39,3 +39,26 @@ AdaBoostRegressor:
     loss: ['linear', 'square', 'exponential']
     learning_rate: [0.1, 0.5, 0.01, 0.05, 0.001]
     n_estimators: [32, 64, 128]
+
+Lasso:
+  model:
+    _target_: sklearn.linear_model.Lasso
+  params:
+    alpha: [0.01, 0.1, 1, 10]
+    selection: ['cyclic', 'random']
+
+Ridge:
+  model:
+    _target_: sklearn.linear_model.Ridge
+  params:
+    alpha: [0.01, 0.1, 1]
+    solver: ['auto', 'svd', 'cholesky', 'lsqr', 'sparse_cg', 'sag', 'saga', 'lbfgs']
+
+ElasticNet:
+  model:
+    _target_: sklearn.linear_model.ElasticNet
+  params:
+    alpha: [0.01, 0.1, 1]
+    l1_ratio: [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
+    selection: ['cyclic', 'random']
+

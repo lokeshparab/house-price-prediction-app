@@ -17,6 +17,8 @@ class DataIngestionConfig:
     test_data_path: str = DATA_INGESTION_CONFIG["test"]
     raw_data_path: str = DATA_INGESTION_CONFIG["raw"]
     target_column: str = DATA_INGESTION_CONFIG["target_column"]
+    drop_columns = DATA_INGESTION_CONFIG["drop_columns"]
+    drop_na_columns = DATA_INGESTION_CONFIG["drop_na_columns"]
 
 class DataIngestion:
     def __init__(self):
@@ -26,7 +28,8 @@ class DataIngestion:
         logging.info("Data ingestion started")
         try:
             df = pd.read_csv(self.ingestion_config.raw_data_path)
-            df.drop(['date','country','street', 'city', 'statezip', 'country'], axis=1, inplace=True)
+            df.dropna(subset=self.ingestion_config.drop_na_columns, inplace=True)
+            df.drop(self.ingestion_config.drop_columns, axis=1, inplace=True)
             logging.info("Read the dataset as dataframe")
 
             train_set, test_set = train_test_split(df, test_size=0.2, random_state=42)

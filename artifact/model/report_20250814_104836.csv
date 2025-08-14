@@ -1,0 +1,10 @@
+model_name,best_model_parmas,model,r2_score,mean_squared_error,mean_absolute_percentage_error
+AdaBoostRegressor,"{'n_estimators': 32, 'loss': 'linear', 'learning_rate': 0.1}","AdaBoostRegressor(learning_rate=0.1, n_estimators=32)",-0.00780931490536152,78406384071.07948,1.030194685414667
+ElasticNet,"{'selection': 'cyclic', 'l1_ratio': 0.5, 'alpha': 0.01}",ElasticNet(alpha=0.01),-0.011867453814335072,78722102524.16866,1.04143997926507
+Ridge,"{'solver': 'cholesky', 'alpha': 0.1}","Ridge(alpha=0.1, solver='cholesky')",-0.011960353828619708,78729330036.44948,1.04145399030334
+Lasso,"{'selection': 'cyclic', 'alpha': 0.01}",Lasso(alpha=0.01),-0.01196152038170073,78729420792.91258,1.04145416836603
+LinearRegression,{'fit_intercept': True},LinearRegression(),-0.011961539273188215,78729422262.6482,1.0414541680503655
+RandomForestRegressor,"{'n_estimators': 32, 'min_samples_leaf': 2, 'max_depth': 6, 'criterion': 'squared_error'}","RandomForestRegressor(max_depth=6, min_samples_leaf=2, n_estimators=32)",-0.030875468900011027,80200903830.32281,1.0422433727387017
+DescisionTreeRegressor,"{'min_samples_leaf': 3, 'max_features': 'sqrt', 'max_depth': 6, 'criterion': 'poisson'}","DecisionTreeRegressor(criterion='poisson', max_depth=6, max_features='sqrt',
+                      min_samples_leaf=3)",-0.045859929628120355,81366677320.97217,1.0303863795317936
+GradientBoostingRegressor,"{'min_samples_leaf': 3, 'max_features': 'sqrt', 'max_depth': 6, 'loss': 'squared_error'}","GradientBoostingRegressor(max_depth=6, max_features='sqrt', min_samples_leaf=3)",-0.16770282756494947,90845912043.92712,1.0651417099319094

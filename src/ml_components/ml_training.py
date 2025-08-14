@@ -108,10 +108,10 @@ class ModelTraining:
 
             logging.info("Model Training Completed")
 
+            logging.info(model_report.iloc[0]['r2_score'])
             if model_report.iloc[0]['r2_score'] < 0.6:
                 raise CustomException(
-                    "Model Training accuracy is very low below 0.6"
-                    f"\nPlease check the report {self.model_training_config.model_report_file_path}",
+                    f"""Model Training accuracy is very low below 0.6\nPlease check the report {self.model_training_config.model_report_file_path}""",
                     sys
                 )
         

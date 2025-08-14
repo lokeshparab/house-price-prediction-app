@@ -1,0 +1,10 @@
+model_name,best_model_parmas,model,r2_score,mean_squared_error,mean_absolute_percentage_error
+AdaBoostRegressor,"{'n_estimators': 64, 'loss': 'square', 'learning_rate': 0.1}","AdaBoostRegressor(learning_rate=0.1, loss='square', n_estimators=64)",-0.00497924664071725,78186208075.45883,1.0299000621796053
+ElasticNet,"{'selection': 'cyclic', 'l1_ratio': 0.7, 'alpha': 1}","ElasticNet(alpha=1, l1_ratio=0.7)",-0.005318944456881525,78212636167.60716,1.0401655078809975
+Ridge,"{'solver': 'sparse_cg', 'alpha': 0.1}","Ridge(alpha=0.1, solver='sparse_cg')",-0.006717353418862926,78321430746.64105,1.0399161965858994
+Lasso,"{'selection': 'cyclic', 'alpha': 0.01}",Lasso(alpha=0.01),-0.0067177866288179455,78321464449.86804,1.0399160745286828
+LinearRegression,{'fit_intercept': True},LinearRegression(),-0.006717808430749539,78321466146.03279,1.0399160724020555
+DescisionTreeRegressor,"{'min_samples_leaf': 3, 'max_features': 'log2', 'max_depth': 5, 'criterion': 'squared_error'}","DecisionTreeRegressor(max_depth=5, max_features='log2', min_samples_leaf=3)",-0.03230386365314697,80312031268.78076,1.0341356943880091
+RandomForestRegressor,"{'n_estimators': 128, 'min_samples_leaf': 3, 'max_depth': 6, 'criterion': 'friedman_mse'}","RandomForestRegressor(criterion='friedman_mse', max_depth=6, min_samples_leaf=3,
+                      n_estimators=128)",-0.03385356691113306,80432596366.80554,1.048880739727914
+GradientBoostingRegressor,"{'min_samples_leaf': 1, 'max_features': 'sqrt', 'max_depth': 5, 'loss': 'quantile'}","GradientBoostingRegressor(loss='quantile', max_depth=5, max_features='sqrt')",-1.3590214276581212,183529103525.1424,1.8265275678937178

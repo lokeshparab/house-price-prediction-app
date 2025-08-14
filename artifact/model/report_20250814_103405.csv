@@ -1,0 +1,7 @@
+model_name,best_model_parmas,model,r2_score,mean_squared_error,mean_absolute_percentage_error
+AdaBoostRegressor,"{'n_estimators': 64, 'loss': 'square', 'learning_rate': 0.05}","AdaBoostRegressor(learning_rate=0.05, loss='square', n_estimators=64)",-0.0002179451047672476,77815784393.73192,1.0253273187237857
+LinearRegression,{'fit_intercept': True},LinearRegression(),-0.006717808430749539,78321466146.03279,1.0399160724020555
+RandomForestRegressor,"{'n_estimators': 128, 'min_samples_leaf': 3, 'max_depth': 4, 'criterion': 'squared_error'}","RandomForestRegressor(max_depth=4, min_samples_leaf=3, n_estimators=128)",-0.01486704040255149,78955466846.7759,1.041827301054394
+DescisionTreeRegressor,"{'min_samples_leaf': 3, 'max_features': 'sqrt', 'max_depth': 6, 'criterion': 'squared_error'}","DecisionTreeRegressor(max_depth=6, max_features='sqrt', min_samples_leaf=3)",-0.07698978577170235,83788543660.93584,1.0627193367200607
+GradientBoostingRegressor,"{'min_samples_leaf': 1, 'max_features': 'log2', 'max_depth': 5, 'loss': 'absolute_error'}","GradientBoostingRegressor(loss='absolute_error', max_depth=5,
+                          max_features='log2')",-0.12536284213633486,87551910778.03131,1.081877835606502

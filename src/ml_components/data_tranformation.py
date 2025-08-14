@@ -4,7 +4,7 @@ from exception.custom_exception import CustomException
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
-from sklearn.preprocessing import OneHotEncoder, StandardScaler
+from sklearn.preprocessing import StandardScaler, OrdinalEncoder
 
 from dataclasses import dataclass
 
@@ -40,7 +40,7 @@ class DataTransformation:
             cat_pipeline = Pipeline(
                 steps=[
                     ("imputer", SimpleImputer(strategy="most_frequent")),
-                    ("one_hot_encoder", OneHotEncoder()),
+                    ("one_hot_encoder", OrdinalEncoder()),
                 ]
             )
 
